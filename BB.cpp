@@ -60,19 +60,22 @@ void clear_screen ( void )
 }
 
 
-//Input handler, delete this and replace with your custom inputs
+
  void *boardMover(void *threadid)
  {
     long tid;
     tid = (long)threadid;
     char input;
+    int i, j=boardSize;
+
     while(1)
     {
+        j = boardSize;
         input = getch();
 
-        if(input=='a')
+        switch (input)
         {
-            int i, j=boardSize;
+            case 'a':
 
             for(i=0; i<boardSize; i++)
             {
@@ -98,12 +101,10 @@ void clear_screen ( void )
             }
 
             Sleep (100);
-        }
+            break;
 
 
-        if(input=='d')
-        {
-            int i, j=boardSize;
+            case 'd':
 
             for(i=0; i<boardSize; i++)
             {
@@ -129,6 +130,7 @@ void clear_screen ( void )
             }
 
             Sleep (100);
+            break;
         }
 
 
@@ -137,8 +139,6 @@ void clear_screen ( void )
     pthread_exit(NULL);
  }
 
-
-//Renderer Function, seperated the printed stuff with logic. You can integrate a graphics library here.
 void *render(void *threadid)
 {
     int i, j;
@@ -206,8 +206,6 @@ void *render(void *threadid)
     pthread_exit(NULL);
 }
 
-
-//Chaning ball velocity direction 
 void changeV(int offrY, int offrX)
 {
     if(renderMatrix[offrY][offrX] == 6 ) {
@@ -230,8 +228,6 @@ void changeV(int offrY, int offrX)
 
 }
 
-
-//Ball movement controller
 void *ballController(void *threadid)
 {
 
@@ -334,7 +330,11 @@ void *ballController(void *threadid)
 
 
 
-//Initializer
+
+
+
+
+
 int initControl()
 {
     ballVelocity.horizontal = 1;
