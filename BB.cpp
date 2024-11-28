@@ -12,8 +12,6 @@ using namespace std;
 
 //Editable size, please keep both values equal though.
 int renderMatrix[50][50];
-
-
 int boardSize;
 //Editable Bat Size
 int batsize = 6;
@@ -72,11 +70,9 @@ void clear_screen ( void )
     {
         j = boardSize;
         input = getch();
-
         switch (input)
         {
             case 'a':
-
             for(i=0; i<boardSize; i++)
             {
                 if(renderMatrix[boardSize-2][i]==2)
@@ -87,7 +83,6 @@ void clear_screen ( void )
 
             if(j>1 && j<boardSize)
             {
-
                 for(i=0; i<boardSize; i++)
                 {
                 renderMatrix[boardSize-2][i]=0;
@@ -97,12 +92,10 @@ void clear_screen ( void )
                 {
                     renderMatrix[boardSize-2][i + j - 1] = 2;
                 }
-
             }
 
             Sleep (100);
             break;
-
 
             case 'd':
 
@@ -116,7 +109,6 @@ void clear_screen ( void )
 
             if(j>0 && j<(boardSize-batsize-1))
             {
-
                 for(i=0; i<boardSize; i++)
                 {
                 renderMatrix[boardSize-2][i]=0;
@@ -126,28 +118,21 @@ void clear_screen ( void )
                 {
                     renderMatrix[boardSize-2][i + j + 1] = 2;
                 }
-
             }
 
             Sleep (100);
             break;
         }
-
-
     }
-
     pthread_exit(NULL);
  }
 
 void *render(void *threadid)
 {
     int i, j;
-
     while(1)
     {
-
         clear_screen();
-
         for(i=1; i<(boardSize/2); i++)
         {
             cout << "  ";
@@ -159,9 +144,7 @@ void *render(void *threadid)
         else{
             cout <<wMessage;
         }
-
         cout << endl;
-
         for(i=0; i<boardSize; i++)
         {
             for(j=0; j<boardSize; j++)
@@ -172,24 +155,19 @@ void *render(void *threadid)
                     {
                         renderC += "* ";
                     }
-
                     else if(renderMatrix[i][j]==6)
                     {
                         renderC += "$ ";
                     }
-
                     else if(renderMatrix[i][j]==2)
                     {
                         renderC += "##";
                     }
-
                     else if(renderMatrix[i][j]==3)
                     {
                         renderC += "0 ";
                     }
-
                 }
-
                 else
                 {
                     renderC += "  ";
@@ -197,12 +175,10 @@ void *render(void *threadid)
             }
             renderC += "\n";
         }
-
         cout << renderC;
         renderC.clear();
         Sleep (1000/fps);
     }
-
     pthread_exit(NULL);
 }
 
@@ -230,13 +206,10 @@ void changeV(int offrY, int offrX)
 
 void *ballController(void *threadid)
 {
-
     int ballX, ballY, i, j, offX, offY;
     float vRatio;
 
     while(1){
-
-
             //get ball co-ordinates
             for(i=0; i<boardSize; i++)
             {
@@ -251,9 +224,7 @@ void *ballController(void *threadid)
             }
 
             renderMatrix[ballY][ballX] = 0;
-
             vRatio = ballVelocity.horizontal / ballVelocity.vertical;
-
 
             if(ballVelocity.vertical > 0)
             {
@@ -282,7 +253,6 @@ void *ballController(void *threadid)
                         }
                     }
                 }
-
             }
 
             else if(ballVelocity.vertical <= 0)
@@ -314,24 +284,13 @@ void *ballController(void *threadid)
                         }
                     }
                 }
-
             }
-
-
             ballX = ballX + ballVelocity.horizontal;
             ballY = ballY + ballVelocity.vertical;
             renderMatrix[ballY][ballX] = 3;
-
             Sleep (100);
-
     }
-
 }
-
-
-
-
-
 
 
 
@@ -349,7 +308,6 @@ int initControl()
             renderMatrix[i][j] = 0;
         }
     }
-
 
     for(i = 0; i<boardSize; i++)
     {
@@ -381,9 +339,7 @@ int initControl()
 }
 
 
-
 //Main
-
 int main(void)
 {
     int col = sizeof(renderMatrix[0])/sizeof(int);
